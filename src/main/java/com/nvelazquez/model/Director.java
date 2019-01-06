@@ -6,9 +6,11 @@ public class Director extends AbstractEmployee{
 		attendance = new DefaultAttendance();
 	}
 	
-	public void update(Call call) {
-		performAttend(call);		
-	}
+    public void update(Subject o, Object arg) {
+        o.removeObserver(this);
+        performAttend((Call) arg);
+        o.addObserver(this);
+    }
 
 	public int getPriority() {
 		return 3;

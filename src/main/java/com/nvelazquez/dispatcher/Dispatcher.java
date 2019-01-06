@@ -8,51 +8,55 @@ import com.nvelazquez.model.Call;
 import com.nvelazquez.model.Observer;
 import com.nvelazquez.model.ObserverPrioritiable;
 import com.nvelazquez.model.Subject;
+import com.nvelazquez.util.PriorityComparator;
 
 public class Dispatcher implements Subject{
 
 	List<ObserverPrioritiable> observers = new ArrayList<>();
-	List<Call> calls = new ArrayList<Call>();
+	
+	public Dispatcher() {}
 	
 	public Dispatcher(List<ObserverPrioritiable> observers, List<Call> calls) {
 		this.observers = observers;
-		this.calls = calls;
+		Collections.sort(this.observers, new PriorityComparator());
 	}
 	
 	public void dispatchCall(Call call) {
-		notifyObservers();
+		
+		waitForEmployee();
+		
+		notifyObservers(call);
 	}
 	
-	public void addCall(Call call) {
-		this.calls.add(call);
+	public void notifyObservers(Call call) {
 		
-		dispatchCall(call);
+		observers.get(0).update(this, call);
+	}
+	
+	private void waitForEmployee() {
+		
+		while(observers.isEmpty()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public synchronized void addObserver(Observer o) {
 		this.observers.add((ObserverPrioritiable) o);
 		
-		Collections.sort(observers, (a, b) -> {
-			return a.getPriority() - b.getPriority();
-		});
+		Collections.sort(observers, new PriorityComparator());
 	}
 
 	public synchronized void removeObserver(Observer o) {
 		this.observers.remove(o);
 	}
 
-	public Observer notifyObservers() {
-		
-		return null;		
-	}
-
-	public List<Call> getCalls() {
-		return calls;
-	}
-
 	public void setCalls(List<Call> calls) {
 		for(Call call : calls) {
-			addCall(call);
+			dispatchCall(call);
 		}
 	}
 

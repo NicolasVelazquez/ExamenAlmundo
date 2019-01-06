@@ -1,6 +1,5 @@
 package com.nvelazquez.model;
 
-
 public class Operator extends AbstractEmployee {
 
 	public Operator() {
@@ -9,7 +8,7 @@ public class Operator extends AbstractEmployee {
 	
     public void update(Subject o, Object arg) {
         o.removeObserver(this);
-        performAttend((Call) arg);
+//        performAttend((Call) arg);
         o.addObserver(this);
     }
 

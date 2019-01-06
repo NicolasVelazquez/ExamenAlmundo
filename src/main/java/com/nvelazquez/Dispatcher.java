@@ -1,8 +1,9 @@
 package com.nvelazquez;
 
 import java.util.List;
+import java.util.Observable;
 
-public class Dispatcher implements Subject{
+public class Dispatcher extends Observable{
 
 	private List Observers;
 	
@@ -19,6 +20,19 @@ public class Dispatcher implements Subject{
 	public void notifyObserver(Observer observer) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public synchronized void dispatchCall() {
+		setChanged();
+		notifyObservers();
+	}
+
+	public List getObservers() {
+		return Observers;
+	}
+
+	public void setObservers(List observers) {
+		Observers = observers;
 	}
 
 }

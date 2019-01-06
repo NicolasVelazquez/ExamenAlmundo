@@ -1,4 +1,4 @@
-package com.nvelazquez;
+package com.nvelazquez.dispatcher;
 
 /**
  * Hello world!

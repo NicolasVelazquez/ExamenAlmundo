@@ -46,9 +46,9 @@ public class DispatcherTest extends TestCase {
     	dispatcher.dispatchCall(new Call(1l));
     	dispatcher.dispatchCall(new Call(1l));
     	
-    	dispatcher.shutdownExecutor();
+//    	dispatcher.shutdownExecutor();
     	
-    	while(!dispatcher.executorService.isTerminated()){
+    	while(!dispatcher.getExecutorService().isTerminated()){
 	    	try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {

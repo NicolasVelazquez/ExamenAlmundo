@@ -15,5 +15,9 @@ public class Director extends AbstractEmployee{
 	public int getPriority() {
 		return 3;
 	}
+	
+	public void update(Object arg) {
+        performAttend(((Call) arg));
+	}
 
 }

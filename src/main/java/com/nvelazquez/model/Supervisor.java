@@ -16,4 +16,8 @@ public class Supervisor extends AbstractEmployee{
 		return 2;
 	}
 	
+	public void update(Object arg) {
+        performAttend(((Call) arg));
+	}
+	
 }

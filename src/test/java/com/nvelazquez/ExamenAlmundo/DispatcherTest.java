@@ -1,17 +1,33 @@
-package com.nvelazquez.dispatcher;
+package com.nvelazquez.ExamenAlmundo;
 
+import com.nvelazquez.dispatcher.Dispatcher;
 import com.nvelazquez.model.Call;
 import com.nvelazquez.model.Operator;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
+public class DispatcherTest extends TestCase {
+
+	public DispatcherTest( String testName )
+    {
+        super( testName );
+    }
+
+    public static Test suite()
+    {
+        return new TestSuite( DispatcherTest.class );
+    }
+    
+    @Override
+    protected void setUp() throws Exception {
+    	
+    	super.setUp();
+    }
+
+    public void testApp(){
+    	
     	Dispatcher dispatcher = new Dispatcher();
     	
     	dispatcher.addObserver(new Operator());
@@ -32,5 +48,14 @@ public class App
     	
     	dispatcher.shutdownExecutor();
     	
+    	while(!dispatcher.executorService.isTerminated()){
+	    	try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+    	}
+    	
+        assertTrue( true );
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import com.nvelazquez.model.AbstractEmployee;
 import com.nvelazquez.model.Call;
@@ -16,8 +17,8 @@ import com.nvelazquez.util.PriorityComparator;
 
 public class Dispatcher implements Subject{
 
-	volatile List<ObserverPrioritiable> observers = new ArrayList<>();
-	ExecutorService executorService = Executors.newFixedThreadPool(10);
+	private List<ObserverPrioritiable> observers = Collections.synchronizedList(new ArrayList<>());
+	public ExecutorService executorService = Executors.newFixedThreadPool(10);
 	
 	public Dispatcher() {}
 	
@@ -28,29 +29,53 @@ public class Dispatcher implements Subject{
 	
 	public void dispatchCall(Call call) {
 		
-		waitForEmployee();
+//		waitForEmployee();
 
-		synchronized(this) {
-			call.setEmployee((AbstractEmployee) notifyObservers());
-			
-			removeObserver(call.getEmployee());
-		}
+//		synchronized(this) {
+//			call.setEmployee((AbstractEmployee) notifyObservers(call));
+//			
+//			removeObserver(call.getEmployee());
+//		}
 		
-		executorService.submit(call);
 		
-		addObserver(call.getEmployee());
+		
+		Runnable dispatchTask = new Runnable(){
+			public void run() {
+				Dispatcher.this.notifyObservers(call);
+			};
+		};
+		executorService.submit(dispatchTask);
+		
+//		addObserver(call.getEmployee());
 	}
 	
-	public synchronized Observer notifyObservers() {
+	public void notifyObservers(Object call) {
+//		int priority = 1;
+//		boolean called = false;
+
+		waitForEmployee();
+		this.observers.get(0).update(this, call);
 		
-		return observers.get(0);
+//		while(priority <= ObserverPrioritiable.maxPriorities && !called){
+//			int copyPriority = priority;
+//			ObserverPrioritiable observer = this.observers
+//					.stream()
+//					.filter(o -> o.getPriority() == copyPriority)
+//					.findFirst().orElse(null);
+//			if(observer == null){
+//				priority++;
+//			} else {
+//				observer.update(this, call);
+//				called = true;
+//			}
+//		}
 	}
 	
 	private void waitForEmployee() {
 		
 		while(observers.isEmpty()) {
 			try {
-				executorService.wait(1000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -59,13 +84,9 @@ public class Dispatcher implements Subject{
 	
 	public void shutdownExecutor() {
 		
-		try {
-			System.out.println("Shutdown...");
-			executorService.awaitTermination(9999, TimeUnit.MILLISECONDS);
-			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		System.out.println("Shutdown...");
+		executorService.shutdown();
+		
 	}
 	
 	public synchronized void addObserver(Observer o) {

@@ -3,7 +3,11 @@ package com.nvelazquez.dispatcher;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
+import com.nvelazquez.model.AbstractEmployee;
 import com.nvelazquez.model.Call;
 import com.nvelazquez.model.Observer;
 import com.nvelazquez.model.ObserverPrioritiable;
@@ -12,7 +16,8 @@ import com.nvelazquez.util.PriorityComparator;
 
 public class Dispatcher implements Subject{
 
-	List<ObserverPrioritiable> observers = new ArrayList<>();
+	volatile List<ObserverPrioritiable> observers = new ArrayList<>();
+	ExecutorService executorService = Executors.newFixedThreadPool(10);
 	
 	public Dispatcher() {}
 	
@@ -24,23 +29,42 @@ public class Dispatcher implements Subject{
 	public void dispatchCall(Call call) {
 		
 		waitForEmployee();
+
+		synchronized(this) {
+			call.setEmployee((AbstractEmployee) notifyObservers());
+			
+			removeObserver(call.getEmployee());
+		}
 		
-		notifyObservers(call);
+		executorService.submit(call);
+		
+		addObserver(call.getEmployee());
 	}
 	
-	public void notifyObservers(Call call) {
+	public synchronized Observer notifyObservers() {
 		
-		observers.get(0).update(this, call);
+		return observers.get(0);
 	}
 	
 	private void waitForEmployee() {
 		
 		while(observers.isEmpty()) {
 			try {
-				Thread.sleep(100);
+				executorService.wait(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void shutdownExecutor() {
+		
+		try {
+			System.out.println("Shutdown...");
+			executorService.awaitTermination(9999, TimeUnit.MILLISECONDS);
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 	

@@ -16,3 +16,5 @@ La cantidad de llamadas atendidas está dada por el pool de Fixed Threads dispon
 
 - Dar alguna solución sobre qué pasa con una llamada cuando entran más de 10 llamadas concurrentes.
   - Al igual que en el caso anterior, llamadas que no pudieron ser atendidas son puestas en una cola hasta que haya un empleado disponible.
+
+Diagrama de clases en docs/

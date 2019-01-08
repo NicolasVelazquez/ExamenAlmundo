@@ -1,6 +1,6 @@
 package com.nvelazquez.model;
 
-public abstract class AbstractEmployee implements ObserverPrioritiable {
+public abstract class AbstractEmployee implements ObserverWithPriority {
 
 	Attendance attendance;
 	

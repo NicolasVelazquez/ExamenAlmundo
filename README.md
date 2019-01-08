@@ -2,7 +2,7 @@
 El principal objetivo del código es cumplir con las consignas dadas, el segundo objetivo es ser escalable.
 
 Para resolver la relación del Dispatcher y los empleados apliqué una adaptación del patrón de diseño Observer.
-Tanto Operator, Supervisor y Director son observers con con prioridad.
+Tanto Operator, Supervisor y Director son observers con prioridad.
 
 Cada empleado contiene un comportamiento que es atender llamadas. Este comportamiento está desacoplado de los empleados.
 En este caso elegí resolver la relación de un empleado y su manera de atender llamadas con el patrón de diseño strategy.

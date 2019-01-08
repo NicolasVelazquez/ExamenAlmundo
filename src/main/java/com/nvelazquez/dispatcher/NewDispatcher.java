@@ -2,13 +2,10 @@ package com.nvelazquez.dispatcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.nvelazquez.model.AbstractEmployee;
 import com.nvelazquez.model.Call;
 import com.nvelazquez.model.Observer;
 import com.nvelazquez.model.ObserverPrioritiable;
@@ -19,7 +16,6 @@ public class NewDispatcher  implements Subject{
 
 	private List<ObserverPrioritiable> observers = Collections.synchronizedList(new ArrayList<>());
 	private ExecutorService executorService = Executors.newFixedThreadPool(10);
-	private Queue<Call> calls = new LinkedList<>();
 	
 	public NewDispatcher() {}
 	
@@ -30,23 +26,19 @@ public class NewDispatcher  implements Subject{
 	
 	public void dispatchCall(Call call) {
 
-//		calls.add(call);
-		
 		waitForEmployee();
 		
-		AbstractEmployee employee = (AbstractEmployee) asignEmployee();
-		System.out.println(employee.getPriority());
+		ObserverPrioritiable employee = asignEmployee();
 		
 		Runnable dispatchTask = new Runnable() {
 			public void run() {
-				employee.performAttend(call);
-				addObserver(employee);
+				employee.update(NewDispatcher.this, call);
 			};
 		};
 		executorService.submit(dispatchTask);
 	}
 	
-	public ObserverPrioritiable asignEmployee() {
+	public synchronized ObserverPrioritiable asignEmployee() {
 		ObserverPrioritiable o = this.observers.get(0);
 		removeObserver(o);
 		return o;
@@ -70,12 +62,14 @@ public class NewDispatcher  implements Subject{
 
 	}
 
-	public synchronized void addObserver(Observer o) {
-		this.observers.add((ObserverPrioritiable) o);
-		Collections.sort(observers, new PriorityComparator());
+	public void addObserver(Observer o) {
+		if(!this.observers.contains(o)){
+			this.observers.add((ObserverPrioritiable) o);
+			Collections.sort(observers, new PriorityComparator());
+		}
 	}
 
-	public synchronized void removeObserver(Observer o) {
+	public void removeObserver(Observer o) {
 		this.observers.remove(o);
 	}
 	
@@ -93,14 +87,6 @@ public class NewDispatcher  implements Subject{
 
 	public void setExecutorService(ExecutorService executorService) {
 		this.executorService = executorService;
-	}
-
-	public Queue<Call> getCalls() {
-		return calls;
-	}
-
-	public void setCalls(Queue<Call> calls) {
-		this.calls = calls;
 	}
 
 }

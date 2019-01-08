@@ -7,7 +7,6 @@ public class Supervisor extends AbstractEmployee{
 	}
 	
     public void update(Subject o, Object arg) {
-        o.removeObserver(this);
         performAttend((Call) arg);
         o.addObserver(this);
     }

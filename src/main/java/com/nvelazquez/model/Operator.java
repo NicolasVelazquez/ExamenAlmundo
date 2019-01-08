@@ -7,9 +7,8 @@ public class Operator extends AbstractEmployee {
 	}
 	
     public void update(Subject o, Object arg) {
-//        o.removeObserver(this);
         performAttend(((Call) arg));
-//        o.addObserver(this);
+        o.addObserver(this);
     }
 
 	public int getPriority() {

@@ -38,26 +38,13 @@ public class DispatcherTest extends TestCase {
     	dispatcher.dispatchCall(new Call(1l));
     	dispatcher.dispatchCall(new Call(2l));
     	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(2l));
     	dispatcher.dispatchCall(new Call(1l));
     	dispatcher.dispatchCall(new Call(2l));
     	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(1l));
     	dispatcher.dispatchCall(new Call(2l));
     	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(1l));
     	dispatcher.dispatchCall(new Call(2l));
-    	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(2l));
-    	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(1l));
-    	dispatcher.dispatchCall(new Call(2l));
-    	dispatcher.dispatchCall(new Call(1l));
     	dispatcher.dispatchCall(new Call(1l));
     	
     	dispatcher.shutdownExecutor();

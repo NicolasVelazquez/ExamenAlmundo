@@ -14,14 +14,14 @@ import com.nvelazquez.model.ObserverPrioritiable;
 import com.nvelazquez.model.Subject;
 import com.nvelazquez.util.PriorityComparator;
 
-public class Dispatcher implements Subject {
+public class OldDispatcher implements Subject {
 
 	private List<ObserverPrioritiable> observers = Collections.synchronizedList(new ArrayList<>());
 	private ExecutorService executorService = Executors.newFixedThreadPool(10);
 	private Queue<Call> calls = new LinkedList<>();
 	private Thread thread;
 
-	public Dispatcher() {
+	public OldDispatcher() {
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -48,7 +48,7 @@ public class Dispatcher implements Subject {
 		thread.start();
 	}
 
-	public Dispatcher(List<ObserverPrioritiable> observers, List<Call> calls) {
+	public OldDispatcher(List<ObserverPrioritiable> observers, List<Call> calls) {
 		this();
 		this.observers = observers;
 		Collections.sort(this.observers, new PriorityComparator());

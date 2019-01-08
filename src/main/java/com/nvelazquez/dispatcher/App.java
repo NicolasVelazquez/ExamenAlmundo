@@ -12,7 +12,7 @@ public class App
     public static void main( String[] args )
     {
 
-    	Dispatcher dispatcher = new Dispatcher();
+    	OldDispatcher dispatcher = new OldDispatcher();
     	
     	dispatcher.addObserver(new Operator());
     	dispatcher.addObserver(new Operator());

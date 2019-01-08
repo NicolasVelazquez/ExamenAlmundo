@@ -1,8 +1,9 @@
 package com.nvelazquez.ExamenAlmundo;
 
-import com.nvelazquez.dispatcher.Dispatcher;
+import com.nvelazquez.dispatcher.NewDispatcher;
 import com.nvelazquez.model.Call;
 import com.nvelazquez.model.Operator;
+import com.nvelazquez.model.Supervisor;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -28,10 +29,11 @@ public class DispatcherTest extends TestCase {
 
     public void testApp(){
     	
-    	Dispatcher dispatcher = new Dispatcher();
+    	NewDispatcher dispatcher = new NewDispatcher();
     	
     	dispatcher.addObserver(new Operator());
     	dispatcher.addObserver(new Operator());
+    	dispatcher.addObserver(new Supervisor());
 
     	dispatcher.dispatchCall(new Call(1l));
     	dispatcher.dispatchCall(new Call(2l));
@@ -45,8 +47,20 @@ public class DispatcherTest extends TestCase {
     	dispatcher.dispatchCall(new Call(2l));
     	dispatcher.dispatchCall(new Call(1l));
     	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(2l));
+    	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(2l));
+    	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(2l));
+    	dispatcher.dispatchCall(new Call(1l));
+    	dispatcher.dispatchCall(new Call(1l));
     	
-//    	dispatcher.shutdownExecutor();
+    	dispatcher.shutdownExecutor();
     	
     	while(!dispatcher.getExecutorService().isTerminated()){
 	    	try {

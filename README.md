@@ -5,7 +5,6 @@ Para resolver la relación del Dispatcher y los empleados apliqué una adaptaci�
 Tanto Operator, Supervisor y Director son observers con con prioridad.
 
 Cada empleado contiene un comportamiento que es atender llamadas. Este comportamiento está desacoplado de los empleados.
-
 En este caso elegí resolver la relación de un empleado y su manera de atender llamadas con el patrón de diseño strategy.
 
 La cantidad de llamadas atendidas está dada por el pool de Fixed Threads disponible (10) y la cantidad de empleados.

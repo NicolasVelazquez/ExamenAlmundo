@@ -55,6 +55,12 @@ public class Dispatcher implements Subject {
 		}
 	}
 	
+	/**
+	 * Cada llamada se asigna a un empleado y se procesa en paralelo.
+	 * @param observer
+	 * @param call
+	 * @return Runnable a ejecutar en el ExecutorService
+	 */
 	private Runnable getDispatchTask(Observer observer, Call call){
 		Runnable dispatchTask = new Runnable() {
 			public void run() {
@@ -65,8 +71,9 @@ public class Dispatcher implements Subject {
 	}
 
 	/**
-	 * Método encargado de asignar un empleado para cada llamada. Es synchronized ya que es necesario que 1 empleado atienda sólo 1 llamada
-	 * @return
+	 * Método encargado de asignar un empleado para cada llamada. 
+	 * Es synchronized ya que es necesario que 1 empleado atienda sólo 1 llamada.
+	 * @return Observer asignado
 	 */
 	public synchronized Observer assignObserver() {
 		if(observers.isEmpty()){

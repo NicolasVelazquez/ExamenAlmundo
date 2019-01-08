@@ -22,6 +22,8 @@ import com.nvelazquez.util.PriorityComparator;
  * a poner cuando termina su llamada.
  * <br>
  * La lista de empleados es ordenada por prioridad siendo Operador: 1, Supervisor: 2 y Director: 3
+ * <br>
+ * El ExecutorService se encarga de procesar las llamadas en paralelo.
  * 
  * @author NicolasVelazquez
  *
@@ -62,6 +64,10 @@ public class Dispatcher implements Subject {
 		return dispatchTask;
 	}
 
+	/**
+	 * Método encargado de asignar un empleado para cada llamada. Es synchronized ya que es necesario que 1 empleado atienda sólo 1 llamada
+	 * @return
+	 */
 	public synchronized Observer assignObserver() {
 		if(observers.isEmpty()){
 			return null;

@@ -6,11 +6,11 @@ public class DefaultAttendance implements Attendance{
 	
 	public void attend(Call call) {
 		System.out.println("Atendiendo llamada... Thead " +Thread.currentThread().getId());
-		try {
-			Thread.sleep(call.getDuration()*toMilliseconds);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(call.getDuration()*toMilliseconds);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
 		System.out.println("Llamada finalizada. Thead " +Thread.currentThread().getId());
 	}

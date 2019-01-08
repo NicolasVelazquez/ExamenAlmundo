@@ -10,6 +10,8 @@ En este caso elegí resolver la relación de un empleado y su manera de atender 
 
 La cantidad de llamadas atendidas está dada por el pool de Fixed Threads disponible (10) y la cantidad de empleados.
 
+
+
 - Dar alguna solución sobre qué pasa con una llamada cuando no hay ningún empleado libre.
   - Cuando no existe ningún empleado disponible, la llamada es puesta en una cola. La cola es consultada por un Thread dentro del Distpach que asignará la call a un empleado cuando encuentre uno disponible.
 

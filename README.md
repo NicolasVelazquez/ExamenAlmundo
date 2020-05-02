@@ -1,4 +1,4 @@
-# ExamenAlmundo
+# ExamenConcurrente
 El principal objetivo del código es cumplir con las consignas dadas, el segundo objetivo es ser escalable.
 
 Para resolver la relación del Dispatcher y los empleados apliqué una adaptación del patrón de diseño Observer.
